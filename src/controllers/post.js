@@ -1,4 +1,5 @@
 const Post = require("../models/post");
+const socketIOClient = require("socket.io-client")(process.env.APP_URL);
 
 class PostController {
   async upload(req, res) {
@@ -10,6 +11,7 @@ class PostController {
       key,
       url
     });
+    socketIOClient.emit("newImageReq", post);
     res.status(201).json(post);
   }
 
